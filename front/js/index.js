@@ -1,3 +1,6 @@
+//const utilisable au niveau de l'affichage produits (produits ou erreur)
+const element = document.getElementById("items");
+
 //Mise en place d'un fetch afin de récupérer tous les produits sur l'API
 //le fetch est mis dans une fonction qui sera par la suite passée dans une autre 
 //fonction asynchrone afin de pouvoir passer un paramètre "await" à la récupération 
@@ -7,7 +10,7 @@ const getProducts = () =>
         .then(res => res.json())
         .then(data => data)
         .catch(function (err) {
-            console.log('erreur de chargement...', err)
+            element.innerHTML = "Une erreur d'affichage est survenue, veuillez nous excuser!"
         });
 
 //catch qui nous permet de capter une erreur si il s'en produit une lors de l'exécution du fetch
@@ -21,7 +24,6 @@ const displayProducts = (allProducts) => {
 
         //je définis une const pour que la récupération de mes éléments dans l'API soit plus simple
         const product = allProducts[i];
-        let element = document.getElementById("items");
         let childElement = document.createElement("a");
 
         childElement.innerHTML = `<a href="./product.html?id=${product._id}"><article>
