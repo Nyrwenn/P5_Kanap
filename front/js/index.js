@@ -25,12 +25,12 @@ const displayProducts = (allProducts) => {
         //je définis une const pour que la récupération de mes éléments dans l'API soit plus simple
         const product = allProducts[i];
         let childElement = document.createElement("a");
+        childElement.href = `./product.html?id=${product._id}`
 
-        childElement.innerHTML = `<a href="./product.html?id=${product._id}"><article>
-        <img src=${product.imageUrl} alt=${product.altTxt}>
+        childElement.innerHTML = `<article><img src=${product.imageUrl} alt=${product.altTxt}>
         <h3 class="productName">${product.name}</h3>
         <p class="productDescription">${product.description}</p>
-        </article></a>`;
+        </article>`;
 
         element.appendChild(childElement);
         //appendChild me permet de créer un nouveau noeud html pour chaque produit
