@@ -52,3 +52,66 @@ const main = async () => {
 }
 
 main();
+
+/*Mise en place des constantes permettant de garder en local storage les valeurs enregistrées pour le panier*/
+
+const addToStorage = () => {
+    const keepColor = document.getElementById("colors").value;
+    const keepQuantity = parseInt(document.getElementById("quantity").value, 10);
+
+    /*Mise en place de conditions d'erreur si les données couleur et quantité ne sont pas saisies*/
+
+    if (!keepColor) {
+        return window.alert("Veuillez sélectionner une couleur");
+    }
+    if (keepQuantity < 1) {
+        return window.alert("Veuillez saisir une quantité");
+    }
+
+    /*Je vais récupérer les produits qui sont dans mon local storage, mais je les
+    parse pour pouvoir les lire*/
+
+    let storage = JSON.parse(localStorage.getItem("cart"));
+
+    /*Je définis un tableau pour pouvoir push mes données
+    si je ne fais pas ça il y a une erreur "null" qui se log*/
+
+    if (storage === null) {
+        storage = [];
+    }
+
+    /*boucle qui va parcourir directement le localStorage et qui me permet d'éviter d'avoir des produits similaires 
+    en double sur plusieurs lignes, si les produits ont le même nom et la même couleur que ceux déjà 
+    dans le panier, alors on incrémentera la quantité seulement.*/
+
+    for (let i in storage) {
+        const productInCart = storage[i];
+        // console.log("element:", productInCart);
+        if (productInCart.id === idParams && productInCart.color === keepColor) {
+            productInCart.quantity = keepQuantity + productInCart.quantity;
+            return localStorage.setItem("cart", JSON.stringify(storage))
+
+        }
+    }
+    console.log("nouvel id");
+    //push in storage
+
+    storage.push({
+        id: idParams,
+        color: keepColor,
+        quantity: keepQuantity,
+    })
+
+
+    localStorage.setItem("cart", JSON.stringify(storage));
+}
+
+console.log(localStorage.getItem("cart"));
+
+/*fonction qui va me permettre d'entendre l'évenement au clic du bouton "ajouter au panier"
+et de garder en mémoire les produits*/
+
+const keepElement = document.getElementById("addToCart");
+keepElement.addEventListener("click", function () {
+    addToStorage();
+});
