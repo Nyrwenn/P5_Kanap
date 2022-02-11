@@ -44,7 +44,7 @@ const displayProductParams = (product) => {
     }
 };
 
-/*fonction asynchrone qui me permet de mettre mes autres fonctions en attente*/
+/*Fonction asynchrone qui me permet de mettre mes autres fonctions en attente*/
 
 const main = async () => {
     const product = await getProduct();
@@ -86,15 +86,17 @@ const addToStorage = () => {
 
     for (let i in storage) {
         const productInCart = storage[i];
-        // console.log("element:", productInCart);
+
         if (productInCart.id === idParams && productInCart.color === keepColor) {
             productInCart.quantity = keepQuantity + productInCart.quantity;
-            return localStorage.setItem("cart", JSON.stringify(storage))
-
+            try {
+                localStorage.setItem("cart", JSON.stringify(storage));
+            } catch (err) {
+                return window.alert("Attention l'enregistrement n'a pas fonctionné");
+            }
         }
     }
-    console.log("nouvel id");
-    //push in storage
+    /*Je push les paramètres à enregistrer dans mon tableau*/
 
     storage.push({
         id: idParams,
@@ -102,11 +104,12 @@ const addToStorage = () => {
         quantity: keepQuantity,
     })
 
-
-    localStorage.setItem("cart", JSON.stringify(storage));
+    try {
+        localStorage.setItem("cart", JSON.stringify(storage));
+    } catch (err) {
+        return window.alert("Attention l'enregistrement n'a pas fonctionné");
+    }
 }
-
-console.log(localStorage.getItem("cart"));
 
 /*fonction qui va me permettre d'entendre l'évenement au clic du bouton "ajouter au panier"
 et de garder en mémoire les produits*/
