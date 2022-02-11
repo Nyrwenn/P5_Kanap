@@ -74,10 +74,10 @@ async function main() {
         elt.addEventListener("click", function (event) {
             /*event target cible précisément l'élément, closest me permet de récupérer les id et
             les colors de l'élément parent*/
-            const keepElement = event.target.closest("article");
-            const dataColor = keepElement.dataset.color;
-            const dataId = keepElement.dataset.id;
-            //Coda avant
+            const findParent = event.target.closest("article");
+            const dataColor = findParent.dataset.color;
+            const dataId = findParent.dataset.id;
+
             for (let i in storage) {
                 if (storage[i].id === dataId && storage[i].color === dataColor) {
                     storage.splice(i, 1);
@@ -95,6 +95,36 @@ async function main() {
             }
 
         })
+    }
+    /*Mise en place de l'event listener pour les input quantité*/
+    let itemQuantity = document.getElementsByName("itemQuantity");
+
+    for (item of itemQuantity) {
+        item.addEventListener("change", function (event) {
+            const findParent = event.target.closest("article");
+            const keepValue = event.target.value;
+            const dataColor = findParent.dataset.color;
+            const dataId = findParent.dataset.id;
+
+            /*Je vérifie grâce à ma boucle que les id et la quantité correspondent bien,
+            afin de modifier le bon élément dans mon storage*/
+            for (let i in storage) {
+                if (storage[i].id === dataId && storage[i].color === dataColor) {
+                    storage[i].quantity = keepValue;
+
+                    /*Je récupère ma valeur et je met à jour mon storage avec la nouvelle valeur*/
+
+                    try {
+                        localStorage.setItem("cart", JSON.stringify(storage));
+                        location.reload();
+                    } catch (err) {
+                        console.log("error", err);
+                    }
+                }
+
+            }
+        }
+        )
     }
 }
 
