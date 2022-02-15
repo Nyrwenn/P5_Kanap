@@ -12,6 +12,22 @@ class Basket {
             this.basket = JSON.parse(basket);
         }
     }
+
+    returnBasket() {
+        return this.basket;
+    }
+
+    /*Fonction fetch qui me permet de récupérer tous les produits de l'API,
+    réutilisable sur plusieurs pages du site*/
+    getProducts() {
+
+        return fetch(`http://localhost:3000/api/products`)
+            .then(res => res.json())
+            .then(data => data)
+            .catch(function (err) {
+                window.alert("Une erreur d'affichage est survenue, veuillez nous excuser!");
+            });
+    }
     /*Fonction qui me permet de sauvegarder mon panier dans mon storage*/
     saveBasket() {
         console.log(this.basket);

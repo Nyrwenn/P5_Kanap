@@ -41,7 +41,6 @@ const displayProduct = (product) => {
     }
 };
 
-
 /*Fonction qui me permet de vérifier que mes champs couleur et quantités soient bien remplis avant
 que l'utilisateur clique sur "ajouter au panier"*/
 function checkupInput(color, quantity) {
@@ -73,8 +72,6 @@ function listenEvents(basket) {
     })
 
 };
-
-
 
 /*Fonction asynchrone qui me permet de mettre mes autres fonctions en attente et dans laquelle j'invoque mes fonctions*/
 const main = async () => {
