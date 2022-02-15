@@ -41,7 +41,7 @@ const displayProducts = (allProducts) => {
 
 const main = async () => {
     const allProducts = await getProducts();
-    const displayer = await displayProducts(allProducts);
+    displayProducts(allProducts);
 }
 
 main();

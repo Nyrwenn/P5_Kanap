@@ -2,8 +2,17 @@
 
 let storage = JSON.parse(localStorage.getItem("cart"));
 
-/*Je crée ma fonction qui me permettra d'aller insérer mes éléments dans le DOM*/
-/*création d'une const pour faciliter la relation parent-enfant*/
+/*Fonction qui permet d'aller récupérer une fiche produit dans l'API par son id*/
+const getProducts = (id) =>
+    fetch(`http://localhost:3000/api/products/${id}`)
+        .then(res => res.json())
+        .then(data => data)
+        .catch(function (err) {
+            console.log("error", err);
+        });
+
+/*Je crée ma fonction qui me permettra d'aller insérer mes éléments dans le DOM
+création d'une variable pour faciliter la relation parent-enfant*/
 
 const element = document.getElementById("cart__items");
 
@@ -36,38 +45,22 @@ const displayProducts = (products, storageToShow) => {
     element.appendChild(childElement);
 }
 
-/*Je vais récupérer  mes données API pour avoir les clés pour afficher le panier utilisateur*/
+/*Je vais récupérer mes données API pour avoir les clés pour afficher le panier utilisateur*/
 
 async function displayAllProducts() {
     for (let storageToShow of storage) {
-
-        const getProducts = () =>
-            fetch(`http://localhost:3000/api/products/${storageToShow.id}`)
-                .then(res => res.json())
-                .then(data => data)
-                .catch(function (err) {
-                    console.log("error", err);
-                });
-
         /*J'attends que la fonction ait fini de m'afficher tous les éléments*/
+        const products = await getProducts(storageToShow.id);
+        displayProducts(products, storageToShow);
 
-        const displayOneElt = async () => {
-            const products = await getProducts();
-            const displayer = await displayProducts(products, storageToShow);
-        }
-
-        await displayOneElt();
     }
     return
 }
 
-/* Fonction asynchrone qui me permet d'attendre que tous les produits soient affichés
-avant de passer à la suite du code*/
 
-async function main() {
-    const displayAll = await displayAllProducts();
+/*Fonction qui me sert à supprimer les articles du panier et du local storage*/
+const deleteElements = () => {
 
-    /*Je cible les éléments à écouter pour déterminer les produits à supprimer*/
     let elementsDelete = document.querySelectorAll(".deleteItem");
 
     for (elt of elementsDelete) {
@@ -96,6 +89,11 @@ async function main() {
 
         })
     }
+}
+
+/*Fonction qui va permettre la modifications des quantités depuis la page panier, et qui modifiera mon local storage*/
+
+const modifyQuantities = () => {
     /*Mise en place de l'event listener pour les input quantité*/
     let itemQuantity = document.getElementsByName("itemQuantity");
 
@@ -128,10 +126,24 @@ async function main() {
     }
 }
 
+/*const calculateTotal = () => {
+    for (let totalQuantities of storage) {
+        
+
+    }
+
+
+}*/
+
+
+/* Fonction asynchrone qui me permet d'attendre que tous les produits soient affichés
+avant de passer à la suite du code*/
+
+async function main() {
+    await displayAllProducts();
+    deleteElements();
+    modifyQuantities();
+
+}
+
 main();
-
-
-
-
-
-
