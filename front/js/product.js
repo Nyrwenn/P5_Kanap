@@ -41,23 +41,6 @@ const displayProduct = (product) => {
     }
 };
 
-/*Fonction qui me permet de sauvegarder mon panier dans mon storage*/
-function saveBasket(basket) {
-    localStorage.setItem("cart", JSON.stringify(basket));
-}
-
-/*Fonction qui me permet de récupérer mon panier depuis mon local storage
-Le panier de base sera vide, je crée donc un tableau pour ne pas avoir de "null"*/
-function getBasket() {
-    let basket = localStorage.getItem("cart");
-
-    if (basket == null) {
-        basket = [];
-    } else {
-        return JSON.parse(basket);
-    }
-}
-
 
 /*Fonction qui me permet de vérifier que mes champs couleur et quantités soient bien remplis avant
 que l'utilisateur clique sur "ajouter au panier"*/
@@ -70,32 +53,11 @@ function checkupInput(color, quantity) {
     }
 }
 
-/*Fonction qui me permet d'ajouter un produit au panier.
-La boucle à l'intérieur me permet de vérifier si un produit similaire se trouve déjà dans mon panier,
-si tel est le cas la quantité sera incrémentée. Si le produit n'existe pas, une ligne s'ajoute au panier*/
-function addToBasket(product) {
-    let basket = getBasket();
-    for (let i in basket) {
-        const productInBasket = basket[i];
-
-        if (productInBasket.id === product.id && productInBasket.color === product.color) {
-            productInBasket.quantity = product.quantity + productInBasket.quantity;
-            saveBasket(basket);
-            return;
-
-        }
-
-    }
-    basket.push(product);
-    saveBasket(basket);
-    return;
-}
-
 /*Fonction qui me permet d'entendre l'évenement au clic du bouton "ajouter au panier"
-et de garder en mémoire les produits. Je définis par la même occasion les paramètres que je souhaite garder,
-à savoir l'id, la color et la quantité.*/
+   et de garder en mémoire les produits. Je définis par la même occasion les paramètres que je souhaite garder,
+   à savoir l'id, la color et la quantité.*/
 
-function listenBasket() {
+function listenEvents(basket) {
     const keepElement = document.getElementById("addToCart");
     keepElement.addEventListener("click", function () {
         let id = idParams;
@@ -107,16 +69,19 @@ function listenBasket() {
             quantity: keepQuantity,
         }
         checkupInput(keepColor, keepQuantity);
-        addToBasket(product);
+        basket.addToBasket(product);
     })
+
 };
 
-/*Fonction asynchrone qui me permet de mettre mes autres fonctions en attente et dans laquelle j'invoque mes fonctions*/
 
+
+/*Fonction asynchrone qui me permet de mettre mes autres fonctions en attente et dans laquelle j'invoque mes fonctions*/
 const main = async () => {
     const product = await getProduct();
     displayProduct(product);
-    listenBasket();
+    listenEvents(basket);
+
 }
 
 main();

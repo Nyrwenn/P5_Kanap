@@ -1,6 +1,6 @@
 /*Je vais récupérer mon panier depuis mon localStorage*/
 
-let storage = JSON.parse(localStorage.getItem("cart"));
+let storage = JSON.parse(localStorage.getItem("basket"));
 
 /*Fonction qui permet d'aller récupérer une fiche produit dans l'API par son id*/
 const getProducts = (id) =>
@@ -78,7 +78,7 @@ const deleteElements = () => {
                     /*ne pas oublier de récupérer la valeur et de mettre à jour mon local storage*/
 
                     try {
-                        localStorage.setItem("cart", JSON.stringify(storage));
+                        localStorage.setItem("basket", JSON.stringify(storage));
                         location.reload();
                     } catch (err) {
                         console.log("error", err);
@@ -113,7 +113,7 @@ const modifyQuantities = () => {
                     /*Je récupère ma valeur et je met à jour mon storage avec la nouvelle valeur*/
 
                     try {
-                        localStorage.setItem("cart", JSON.stringify(storage));
+                        localStorage.setItem("basket", JSON.stringify(storage));
                         location.reload();
                     } catch (err) {
                         console.log("error", err);
@@ -128,7 +128,7 @@ const modifyQuantities = () => {
 
 /*const calculateTotal = () => {
     for (let totalQuantities of storage) {
-        
+
 
     }
 
