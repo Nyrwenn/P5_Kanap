@@ -56,7 +56,7 @@ function checkupInput(color, quantity) {
    et de garder en mémoire les produits. Je définis par la même occasion les paramètres que je souhaite garder,
    à savoir l'id, la color et la quantité.*/
 
-function listenEvents(basket) {
+function listenEvents() {
     const keepElement = document.getElementById("addToCart");
     keepElement.addEventListener("click", function () {
         let id = idParams;
@@ -77,7 +77,7 @@ function listenEvents(basket) {
 const main = async () => {
     const product = await getProduct();
     displayProduct(product);
-    listenEvents(basket);
+    listenEvents();
 
 }
 

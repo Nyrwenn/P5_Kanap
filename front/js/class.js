@@ -11,6 +11,8 @@ class Basket {
         } else {
             this.basket = JSON.parse(basket);
         }
+        console.log(this.basket);
+
     }
 
     returnBasket() {
@@ -31,6 +33,7 @@ class Basket {
     /*Fonction qui me permet de sauvegarder mon panier dans mon storage*/
     saveBasket() {
         console.log(this.basket);
+
         localStorage.setItem("basket", JSON.stringify(this.basket));
     }
 
@@ -38,7 +41,6 @@ class Basket {
 La boucle à l'intérieur me permet de vérifier si un produit similaire se trouve déjà dans mon panier,
 si tel est le cas la quantité sera incrémentée. Si le produit n'existe pas, une ligne s'ajoute au panier*/
     addToBasket(product) {
-
         for (let i in this.basket) {
             const productInBasket = this.basket[i];
 
@@ -53,6 +55,28 @@ si tel est le cas la quantité sera incrémentée. Si le produit n'existe pas, u
         this.saveBasket();
         return;
     }
+
+    /*Fonction qui me sert à supprimer les articles du panier et du local storage*/
+    deleteElements(id, color) {
+
+        for (let i in this.basket) {
+            if (this.basket[i].id === id && this.basket[i].color === color) {
+
+                this.basket.splice(i, 1);
+                /*ne pas oublier de récupérer la valeur et de mettre à jour mon local storage*/
+
+                this.saveBasket();
+                location.reload();
+
+
+            }
+
+        }
+    }
+
+
 }
+
+
 
 const basket = new Basket();

@@ -1,5 +1,3 @@
-/*Fonction qui permet d'aller récupérer une fiche produit dans l'API par son id*/
-
 /*Je crée ma fonction qui me permettra d'aller insérer mes éléments dans le DOM
 création d'une variable pour faciliter la relation parent-enfant*/
 
@@ -46,14 +44,33 @@ async function displayAllProducts() {
     return
 }
 
+function listenDeleteElements() {
+
+    const elementsDelete = document.querySelectorAll(".deleteItem");
+    for (let elt of elementsDelete) {
+        elt.addEventListener("click", function (event) {
+
+            /*event target cible précisément l'élément, closest me permet de récupérer les id et
+            les colors de l'élément parent*/
+            const findParent = event.target.closest("article");
+            const dataColor = findParent.dataset.color;
+            const dataId = findParent.dataset.id;
+
+            basket.deleteElements(dataId, dataColor);
+
+        })
+    }
+}
+
 
 /* Fonction asynchrone qui me permet d'attendre que tous les produits soient affichés
 avant de passer à la suite du code*/
 
+
 async function main() {
     await displayAllProducts();
-    /*deleteElements();
-     modifyQuantities();*/
+    listenDeleteElements();
+    /*changeQuantities();*/
 
 }
 
