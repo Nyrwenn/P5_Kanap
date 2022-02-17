@@ -46,6 +46,7 @@ si tel est le cas la quantité sera incrémentée. Si le produit n'existe pas, u
 
             if (productInBasket.id === product.id && productInBasket.color === product.color) {
                 productInBasket.quantity = product.quantity + productInBasket.quantity;
+
                 this.saveBasket();
                 return;
 
@@ -74,8 +75,24 @@ si tel est le cas la quantité sera incrémentée. Si le produit n'existe pas, u
         }
     }
 
+    changeQuantities(id, color, quantity) {
+        /*Je vérifie grâce à ma boucle que les id et la quantité correspondent bien,
+                afin de modifier le bon élément dans mon storage*/
+        for (let i in this.basket) {
+            if (this.basket[i].id === id && this.basket[i].color === color) {
+                this.basket[i].quantity = quantity;
+
+                /*Je récupère ma valeur et je met à jour mon storage avec la nouvelle valeur*/
+                this.saveBasket();
+                location.reload();
+            }
+        }
+    }
 
 }
+
+
+
 
 
 

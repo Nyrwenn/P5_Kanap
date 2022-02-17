@@ -44,6 +44,9 @@ async function displayAllProducts() {
     return
 }
 
+/*fonction qui va aller de pair avec ma fonction de suppression.
+Elle me permet d'écouter l'événement au clic du bouton suppression et de récupérer les 
+données id et couleur des éléments */
 function listenDeleteElements() {
 
     const elementsDelete = document.querySelectorAll(".deleteItem");
@@ -62,6 +65,26 @@ function listenDeleteElements() {
     }
 }
 
+function listenChangeQuantities() {
+
+    /*Mise en place de l'event listener pour les input quantité*/
+    const itemQuantity = document.getElementsByName("itemQuantity");
+
+    for (let item of itemQuantity) {
+        item.addEventListener("change", function (event) {
+            const findParent = event.target.closest("article");
+            const dataId = findParent.dataset.id;
+            const dataColor = findParent.dataset.color;
+            const keepQuantities = parseInt(event.target.value);
+
+            basket.changeQuantities(dataId, dataColor, keepQuantities);
+
+
+        })
+
+    }
+}
+
 
 /* Fonction asynchrone qui me permet d'attendre que tous les produits soient affichés
 avant de passer à la suite du code*/
@@ -70,7 +93,7 @@ avant de passer à la suite du code*/
 async function main() {
     await displayAllProducts();
     listenDeleteElements();
-    /*changeQuantities();*/
+    listenChangeQuantities();
 
 }
 
