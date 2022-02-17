@@ -31,6 +31,18 @@ const displayProducts = (products, basketToShow) => {
 
     element.appendChild(childElement);
 }
+/*Fonction qui me permet d'afficher le nombre total d'articles dans mon panier
+ et le prix total de mon panier*/
+const total = async () => {
+
+    const totalArticlesToShow = document.getElementById("totalQuantity");
+    totalArticlesToShow.textContent = basket.getAllArticles();
+
+    const totalPriceToShow = document.getElementById("totalPrice");
+    totalPriceToShow.textContent = await basket.getAllPrices();
+
+}
+
 
 /*Fonction qui recherche quel est le produit à afficher en fonction du panier*/
 
@@ -44,7 +56,8 @@ async function displayAllProducts() {
     return
 }
 
-/*fonction qui va aller de pair avec ma fonction de suppression.
+
+/*Fonction qui va aller de pair avec ma fonction de suppression.
 Elle me permet d'écouter l'événement au clic du bouton suppression et de récupérer les 
 données id et couleur des éléments */
 function listenDeleteElements() {
@@ -65,6 +78,8 @@ function listenDeleteElements() {
     }
 }
 
+/*Fonction qui me permet d'écouter les événements liés au changement de quantités.
+Je réutilise les fonctions de ma classe pour éviter les répétitions*/
 function listenChangeQuantities() {
 
     /*Mise en place de l'event listener pour les input quantité*/
@@ -79,11 +94,13 @@ function listenChangeQuantities() {
 
             basket.changeQuantities(dataId, dataColor, keepQuantities);
 
-
         })
 
     }
 }
+
+
+
 
 
 /* Fonction asynchrone qui me permet d'attendre que tous les produits soient affichés
@@ -94,6 +111,7 @@ async function main() {
     await displayAllProducts();
     listenDeleteElements();
     listenChangeQuantities();
+    await total();
 
 }
 

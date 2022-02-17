@@ -32,8 +32,6 @@ class Basket {
     }
     /*Fonction qui me permet de sauvegarder mon panier dans mon storage*/
     saveBasket() {
-        console.log(this.basket);
-
         localStorage.setItem("basket", JSON.stringify(this.basket));
     }
 
@@ -89,10 +87,47 @@ si tel est le cas la quantité sera incrémentée. Si le produit n'existe pas, u
         }
     }
 
+    /*Fonction qui me permet de calculer le nombre total d'articles
+    présents dans le panier*/
+    getAllArticles() {
+
+        let totalArticles = 0;
+        for (let i in this.basket) {
+            const allArticles = this.basket[i].quantity;
+
+            totalArticles += allArticles;
+
+
+        }
+        return totalArticles;
+    }
+
+    /*Fonction qui me permet d'aller chercher les prix des produits 
+    directement dans l'API en les faisant corroborer avec leur id.
+    Grâce à la quantité des articles en fonction des id je calcule le prix total*/
+    async getAllPrices() {
+
+        let totalPrice = 0;
+        const allProducts = await this.getProducts();
+
+        for (let j in this.basket) {
+
+
+            for (let i in allProducts) {
+                const price = allProducts[i].price;
+                const id = allProducts[i]._id;
+
+
+                if (this.basket[j].id === allProducts[i]._id) {
+                    totalPrice += this.basket[j].quantity * allProducts[i].price;
+
+
+                }
+            }
+        }
+        return totalPrice;
+    }
 }
-
-
-
 
 
 
