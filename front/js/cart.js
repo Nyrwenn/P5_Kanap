@@ -100,7 +100,86 @@ function listenChangeQuantities() {
 }
 
 
+function validation() {
+    const regexName = /(^.{1,}[a-zA-ZÀ-ÿ]+$)/;
 
+    const firstName = document.getElementById("firstName");
+    firstName.addEventListener("input", function (event) {
+
+        let nameTarget = event.target.value;
+        let isValid = regexName.test(nameTarget);
+        let msgError = document.getElementById("firstNameErrorMsg");
+        if (isValid === false) {
+            msgError.textContent = "Veuillez saisir un prénom valide, sans chiffres.";
+            msgError.style.display = "block";
+        } else {
+            msgError.style.display = "none";
+        }
+
+    })
+
+
+    const lastName = document.getElementById("lastName");
+    lastName.addEventListener("input", function (event) {
+        let nameTarget = event.target.value;
+        let isValid = regexName.test(nameTarget);
+        let msgError = document.getElementById("lastNameErrorMsg");
+        if (isValid === false) {
+            msgError.textContent = "Veuillez saisir un nom valide, sans chiffres.";
+            msgError.style.display = "block";
+        } else {
+            msgError.style.display = "none";
+        }
+
+    })
+    const regexAddress = /^.{12,}/;
+    const address = document.getElementById("address");
+    address.addEventListener("input", function (event) {
+        let addressTarget = event.target.value;
+        let isValid = regexAddress.test(addressTarget);
+        let msgError = document.getElementById("addressErrorMsg");
+        if (isValid === false) {
+            msgError.textContent = "Veuillez saisir une adresse valide exemple: 6 rue Jules Verne 31700.";
+            msgError.style.display = "block";
+        } else {
+            msgError.style.display = "none";
+        }
+
+    })
+
+    const regexCity = /^.{2,}[a-zA-Z]+$/;
+
+    const city = document.getElementById("city");
+    city.addEventListener("input", function (event) {
+        let cityTarget = event.target.value;
+        let isValid = regexCity.test(cityTarget);
+        let msgError = document.getElementById("cityErrorMsg");
+
+        if (isValid === false) {
+            msgError.textContent = "Veuillez saisir une ville valide exemple: Toulouse.";
+            msgError.style.display = "block";
+        } else {
+            msgError.style.display = "none";
+        }
+    })
+
+    const regexMail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+    const email = document.getElementById("email");
+    email.addEventListener("input", function (event) {
+        let emailTarget = event.target.value;
+        let isValid = regexMail.test(emailTarget);
+        let msgError = document.getElementById("emailErrorMsg");
+
+        if (isValid === false) {
+            msgError.textContent = "Veuillez saisir un email valide exemple: johndoe6@gmail.com.";
+            msgError.style.display = "block";
+        } else {
+            msgError.style.display = "none";
+        }
+
+    })
+}
 
 
 /* Fonction asynchrone qui me permet d'attendre que tous les produits soient affichés
@@ -112,6 +191,7 @@ async function main() {
     listenDeleteElements();
     listenChangeQuantities();
     await total();
+    validation();
 
 }
 
