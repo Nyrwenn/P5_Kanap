@@ -127,6 +127,49 @@ si tel est le cas la quantité sera incrémentée. Si le produit n'existe pas, u
         }
         return totalPrice;
     }
+
+
+
+    post(contact) {
+
+        const allId = [];
+
+        for (let i in this.basket) {
+
+            for (let j = 0; j < this.basket[i].quantity; j++) {
+
+                allId.push(this.basket[i].id);
+
+            }
+
+        }
+
+        const dataToSend = {
+            products: allId,
+            contact: contact,
+        }
+        console.log(dataToSend);
+        const headers = new Headers();
+        fetch('http://localhost:3000/api/products/order',
+            {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+
+
+                },
+                body: JSON.stringify(dataToSend)
+            }).then(res => res.json())
+            .then(data => {
+                document.location.href = `./confirmation.html?orderId=${data.orderId}`;
+
+            })
+
+
+
+    }
+
 }
 
 

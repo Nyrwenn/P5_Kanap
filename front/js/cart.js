@@ -99,7 +99,16 @@ function listenChangeQuantities() {
     }
 }
 
+/*Fonction de validation des champs de saisie, elle me permet de gérer mes regex
+en fonction des différents input*/
+let valid = {
+    firstName: false,
+    lastName: false,
+    address: false,
+    city: false,
+    email: false,
 
+}
 function validation() {
     const regexName = /(^.{1,}[a-zA-ZÀ-ÿ]+$)/;
 
@@ -112,7 +121,9 @@ function validation() {
         if (isValid === false) {
             msgError.textContent = "Veuillez saisir un prénom valide, sans chiffres.";
             msgError.style.display = "block";
+            valid.firstName = false;
         } else {
+            valid.firstName = true;
             msgError.style.display = "none";
         }
 
@@ -127,7 +138,9 @@ function validation() {
         if (isValid === false) {
             msgError.textContent = "Veuillez saisir un nom valide, sans chiffres.";
             msgError.style.display = "block";
+            valid.lastName = false;
         } else {
+            valid.lastName = true;
             msgError.style.display = "none";
         }
 
@@ -141,7 +154,9 @@ function validation() {
         if (isValid === false) {
             msgError.textContent = "Veuillez saisir une adresse valide exemple: 6 rue Jules Verne 31700.";
             msgError.style.display = "block";
+            valid.address = false;
         } else {
+            valid.address = true;
             msgError.style.display = "none";
         }
 
@@ -158,7 +173,9 @@ function validation() {
         if (isValid === false) {
             msgError.textContent = "Veuillez saisir une ville valide exemple: Toulouse.";
             msgError.style.display = "block";
+            valid.city = false;
         } else {
+            valid.city = true;
             msgError.style.display = "none";
         }
     })
@@ -174,13 +191,46 @@ function validation() {
         if (isValid === false) {
             msgError.textContent = "Veuillez saisir un email valide exemple: johndoe6@gmail.com.";
             msgError.style.display = "block";
+            valid.email = false;
         } else {
+            valid.email = true;
             msgError.style.display = "none";
         }
 
+
     })
+
+
 }
 
+
+function sendInput() {
+
+    const order = document.getElementById("order");
+    order.addEventListener("click", function (event) {
+
+        const firstName = document.getElementById("firstName").value;
+        const lastName = document.getElementById("lastName").value;
+        const address = document.getElementById("address").value;
+        const city = document.getElementById("city").value;
+        const email = document.getElementById("email").value;
+        const contact = {
+            firstName: firstName,
+            lastName: lastName,
+            address: address,
+            city: city,
+            email: email,
+        }
+
+        if (firstName && lastName && address && city && email) {
+            console.log("PASS")
+            event.preventDefault();
+            if (valid.firstName && valid.lastName && valid.address && valid.city && valid.email) {
+                basket.post(contact);
+            }
+        }
+    })
+}
 
 /* Fonction asynchrone qui me permet d'attendre que tous les produits soient affichés
 avant de passer à la suite du code*/
@@ -192,6 +242,8 @@ async function main() {
     listenChangeQuantities();
     await total();
     validation();
+    sendInput();
+
 
 }
 
