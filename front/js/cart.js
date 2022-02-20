@@ -31,6 +31,7 @@ const displayProducts = (products, basketToShow) => {
 
     element.appendChild(childElement);
 }
+
 /*Fonction qui me permet d'afficher le nombre total d'articles dans mon panier
  et le prix total de mon panier*/
 const total = async () => {
@@ -72,7 +73,9 @@ function listenDeleteElements() {
             const dataColor = findParent.dataset.color;
             const dataId = findParent.dataset.id;
 
-            basket.deleteElements(dataId, dataColor);
+            if (window.confirm("Souhaitez-vous vraiment supprimer cet article du panier?")) {
+                basket.deleteElements(dataId, dataColor);
+            }
 
         })
     }
@@ -203,7 +206,7 @@ function validation() {
 
 }
 
-
+/*Fonction qui me permet de récupérer les valeurs des inputs du formulaire*/
 function sendInput() {
 
     const order = document.getElementById("order");
@@ -221,6 +224,9 @@ function sendInput() {
             city: city,
             email: email,
         }
+
+        /*Je vérifie que tout soit bon en fonction de mes regex et je vérifie que tous
+        les champs soient remplis*/
 
         if (firstName && lastName && address && city && email) {
             console.log("PASS")
@@ -243,8 +249,6 @@ async function main() {
     await total();
     validation();
     sendInput();
-
-
 }
 
 main();

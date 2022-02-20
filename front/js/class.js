@@ -73,6 +73,8 @@ si tel est le cas la quantité sera incrémentée. Si le produit n'existe pas, u
         }
     }
 
+    /*Fonction qui me permet de changer les quantités dans le panier*/
+
     changeQuantities(id, color, quantity) {
         /*Je vérifie grâce à ma boucle que les id et la quantité correspondent bien,
                 afin de modifier le bon élément dans mon storage*/
@@ -129,7 +131,8 @@ si tel est le cas la quantité sera incrémentée. Si le produit n'existe pas, u
     }
 
 
-
+    /*Fonction POST qui me permet d'aller mettre mes données contact et id dans l'API,
+    et d'obtenir un numéro de commande (orderId)*/
     post(contact) {
 
         const allId = [];

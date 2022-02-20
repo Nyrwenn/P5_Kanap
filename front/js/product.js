@@ -1,9 +1,9 @@
-//utilisation de URLSearchParams afin de récupérer les id produits pour la page produit.
+//Utilisation de URLSearchParams afin de récupérer les id produits pour la page produit.
 
 let params = new URLSearchParams(document.location.search);
 let idParams = params.get("id");
 
-/*utilisation d'un fetch pour récupérer les produits
+/*Utilisation d'un fetch pour récupérer les produits
 un par un sous forme d'objets.
 fetch mis en place dans une fonction qui sera mise 
 dans une fonction asynchrone par la suite par souci d'exécution du code*/
@@ -17,7 +17,7 @@ const getProduct = () =>
         });
 
 
-/*fonction qui me permet d'aller chercher chacun des éléments
+/*Fonction qui me permet d'aller chercher chacun des éléments
 nécessaires pour remplir mon document html de manière dynamique.*/
 
 const displayProduct = (product) => {
@@ -26,7 +26,7 @@ const displayProduct = (product) => {
     document.getElementById("price").textContent = `${product.price}`;
     document.getElementById("description").textContent = `${product.description}`;
 
-    /*utilisation d'une boucle pour les valeurs de couleurs
+    /*Utilisation d'une boucle pour les valeurs de couleurs
     il y en a plusieurs donc je veux pouvoir toutes les afficher 
     dans le menu déroulant.*/
     for (let i in product.colors) {
@@ -68,7 +68,12 @@ function listenEvents() {
             quantity: keepQuantity,
         }
         checkupInput(keepColor, keepQuantity);
-        basket.addToBasket(product);
+
+        if (window.confirm("Souhaitez-vous ajouter ce produit au panier?")) {
+            basket.addToBasket(product);
+        };
+
+
     })
 
 };
