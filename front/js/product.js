@@ -14,6 +14,7 @@ const getProduct = () =>
         .then(data => data)
         .catch(function (err) {
             console.log('error', err);
+            window.alert("Une erreur d'affichage est survenue, veuillez nous excuser.")
         });
 
 
@@ -39,18 +40,11 @@ const displayProduct = (product) => {
 
         element.appendChild(childElement);
     }
+
+    let minValue = document.getElementById("quantity");
+    minValue.value = 1;
 };
 
-/*Fonction qui me permet de vérifier que mes champs couleur et quantités soient bien remplis avant
-que l'utilisateur clique sur "ajouter au panier"*/
-function checkupInput(color, quantity) {
-    if (!color) {
-        return window.alert("Veuillez sélectionner une couleur");
-    }
-    if (quantity < 1) {
-        return window.alert("Veuillez saisir une quantité");
-    }
-}
 
 /*Fonction qui me permet d'entendre l'évenement au clic du bouton "ajouter au panier"
    et de garder en mémoire les produits. Je définis par la même occasion les paramètres que je souhaite garder,
@@ -67,16 +61,19 @@ function listenEvents() {
             color: keepColor,
             quantity: keepQuantity,
         }
-        checkupInput(keepColor, keepQuantity);
+        if (keepColor) {
 
-        if (window.confirm("Souhaitez-vous ajouter ce produit au panier?")) {
-            basket.addToBasket(product);
-        };
+            if (window.confirm("Souhaitez-vous ajouter ce produit au panier?")) {
+                basket.addToBasket(product);
 
-
-    })
+            }
+        } else {
+            return window.alert("Veuillez sélectionner une couleur");
+        }
+    });
 
 };
+
 
 /*Fonction asynchrone qui me permet de mettre mes autres fonctions en attente et dans laquelle j'invoque mes fonctions*/
 const main = async () => {

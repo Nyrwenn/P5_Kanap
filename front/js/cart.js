@@ -207,6 +207,7 @@ function validation() {
 }
 
 /*Fonction qui me permet de récupérer les valeurs des inputs du formulaire*/
+
 function sendInput() {
 
     const order = document.getElementById("order");
@@ -225,18 +226,20 @@ function sendInput() {
             email: email,
         }
 
+
         /*Je vérifie que tout soit bon en fonction de mes regex et je vérifie que tous
         les champs soient remplis*/
-
         if (firstName && lastName && address && city && email) {
-            console.log("PASS")
             event.preventDefault();
             if (valid.firstName && valid.lastName && valid.address && valid.city && valid.email) {
-                basket.post(contact);
+                basket.validBasket(contact);
             }
         }
+
     })
+
 }
+
 
 /* Fonction asynchrone qui me permet d'attendre que tous les produits soient affichés
 avant de passer à la suite du code*/
