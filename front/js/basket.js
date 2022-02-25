@@ -6,10 +6,17 @@ class Basket {
         je n'aurais pas besoin de récupérer mon panier pour chaque fonction utilisée, il sera chargé dès le début*/
         let basket = localStorage.getItem("basket");
 
+
         if (basket == null) {
             this.basket = [];
+
         } else {
             this.basket = JSON.parse(basket);
+            this.basket.sort((x, y) => {
+                if (x.id < y.id) { return 1; }
+                if (x.id > y.id) { return -1; }
+                return 0;
+            })
         }
         console.log(this.basket);
 
